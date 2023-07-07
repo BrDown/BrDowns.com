@@ -1,4 +1,6 @@
-// Example data representing nodes and links
+// main code
+
+// waits for all of the jsons before doing anything
 Promise.all([
   d3.json('nodes.json'),
   d3.json('links.json'),
@@ -6,6 +8,8 @@ Promise.all([
 ]).then(([nodes, links, nodePosition]) => {
   let width = window.innerWidth;
   let height = window.innerHeight;
+
+  // if you resize the page
   window.addEventListener("resize", () => {
     width = window.innerWidth;
     height = window.innerHeight;
@@ -13,12 +17,13 @@ Promise.all([
     updateLinks()
     updateNodes()
 });
-  // Create the diagram
+  
   const svg = d3.select('#diagram')
     .append('svg')
     .attr('width', '100%')
     .attr('height', '100%');
-  // Create links
+  
+    // initalizes the lines
   svg.selectAll('line')
     .data(links)
     .enter()
@@ -29,7 +34,7 @@ Promise.all([
     .attr('y2', d => getNodeY(d.target)*height)
     .attr('stroke', 'black');
 
-  // Create nodes
+  // initalizes the nodes
   svg.selectAll('circle')
     .data(nodes)
     .enter()
@@ -44,15 +49,16 @@ Promise.all([
       .on('end', handleDragEnd)
     );
 
+    // helper function that takes a number, then keeps it within a min/max range
   function rangeFix(number, min, max){
     if(number >= min && number <= max) return number;
     else if(number < min) return min;
     else return max;
   }
-  // Helper functions to position nodes
+  // another helper function that simply asks the position JSON for a X value of a node
+  // also has a catch (the index being -1) incase it doesnt exist which creates a new position in the JSON
+  // CURRENTLY THE PHP DOESNT TAKE THIS NEW POSITION AND STAYS LOCAL
   function getNodeX(nodeId) {
-    // Return the X coordinate for a given node ID
-    // Add your logic here
     var index = nodePosition.findIndex(obj => obj.id==nodeId);
     if(index == -1){
       nodePosition.push({
@@ -65,8 +71,8 @@ Promise.all([
     return rangeFix(nodePosition[index].x,0,1);
   }
 
+  // same as above, but for Y
   function getNodeY(nodeId) {
-    // Return the Y coordinate for a given node ID
     var index = nodePosition.findIndex(obj => obj.id==nodeId);
     if(index == -1){
      nodePosition.push({
@@ -77,10 +83,10 @@ Promise.all([
      return .5
     }
     return rangeFix(nodePosition[index].y,0,1);
-    // Add your logic here
+    
   }
 
-  // Drag event handler
+  // Drag function, AKA move the node to the mouse position
   function handleDrag(event, d) {
     const { x, y } = event;
     var index = nodePosition.findIndex(obj => obj.id==d.id);
@@ -92,15 +98,17 @@ Promise.all([
       .attr('cy', nodePosition[index].y*height);
     updateLinks();
   }
+  // at the end of the drag, update the global JSON
   function handleDragEnd(event, d) {
-    updateJSON(d.id) // Update positions JSON file
+    updateJSON(d.id) 
   }
-  // Update links when nodes are dragged
+  // ajusts the nodes if the page is resized
   function updateNodes() {
     svg.selectAll('circle')
       .attr('cx', d => getNodeX(d.id)*width)
       .attr('cy', d => getNodeY(d.id)*height)
     }
+  // ajusts the lines if the page is resized
   function updateLinks() {
     svg.selectAll('line')
       .attr('x1', d => getNodeX(d.source)*width)
@@ -108,6 +116,8 @@ Promise.all([
       .attr('x2', d => getNodeX(d.target)*width)
       .attr('y2', d => getNodeY(d.target)*height);
   }
+
+  // makes a php post request to fix.php which will update the global JSON
   function updateJSON(nodeID){
     console.log("trying to update...")
     var index = nodePosition.findIndex(obj => obj.id==nodeID);
@@ -121,11 +131,11 @@ Promise.all([
     })
       .then(response => console.log(response))
       .then(responseData => {
-        // Handle the response from PHP
+        
         return responseData
       })
       .catch(error => {
-        // Handle any errors that occurred
+        
         throw error
       });
   }
