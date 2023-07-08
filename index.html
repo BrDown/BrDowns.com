@@ -1,9 +1,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Node-Link Diagram Example</title>
+  <title>Node Diagram</title>
   <style>
-    /* Customize the appearance of the diagram */
 body, html {
     margin: 0;
     padding: 0;
@@ -35,13 +34,34 @@ body, html {
     background: fixed;
     background-color: red;
   }
+  .hidden {
+    display: none;
+  }
+
+  #clickPanel {
+    position: absolute;
+    background-color: #f2f2f2;
+    border: 1px solid #ccc;
+    padding: 10px;
+  }
+
   </style>
 </head>
 <body>
+  <div id="clickPanel" class="hidden">
+    <ul>
+      <li>Option 1</li>
+      <li>Option 2</li>
+      <li>Option 3</li>
+    </ul>
+  </div>  
   <div id="diagram"></div>
   <div id="bar">hi</div>
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> 
+  <!-- unused and leftover(i was going to use chart.js, but d3 is what i ended up using) -->
   <script src="https://d3js.org/d3.v7.min.js"></script>
+  <!-- the framework -->
   <script src="diagram.js"></script>
+  <!-- the main script -->
 </body>
 </html>
