@@ -18,7 +18,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
     // TO DO: MAKE IT SO IF THE TESTCASE IS NEVER TRIGGERED, ADDS TO THE JSON.
     if(!$testCase){
-        array_push($data,$dataA) //maybe this will work?
+        array_push($data,$dataA); //maybe this will work?
     }
     $newJsonString = json_encode($data);
     file_put_contents('position.json', $newJsonString);

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <head>
   <title>Node Diagram</title>
   <style>
@@ -50,8 +51,8 @@ body, html {
 <body>
   <div id="clickPanel" class="hidden">
     <ul>
-      <li>Option 1</li>
-      <li>Option 2</li>
+      <li id="name"></li>
+      <li onclick="linkNodes(this.class)" id="linker">link another node</li>
       <li>Option 3</li>
     </ul>
   </div>  

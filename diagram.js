@@ -1,6 +1,11 @@
 // main code
 
 // waits for all of the jsons before doing anything
+var link;
+function linkNodes(foo) {
+  link = foo;
+  console.log(foo)
+}
 Promise.all([
   d3.json('nodes.json'),
   d3.json('links.json'),
@@ -8,6 +13,9 @@ Promise.all([
 ]).then(([nodes, links, nodePosition]) => {
   let width = window.innerWidth;
   let height = window.innerHeight;
+  
+  // initalizes the panel
+  const clickPanel = document.getElementById('clickPanel');
 
   // if you resize the page
   window.addEventListener("resize", () => {
@@ -23,7 +31,8 @@ Promise.all([
     .attr('width', '100%')
     .attr('height', '100%');
   
-    // initalizes the lines
+  function refresh() { // initalizes the lines
+  svg.html("")
   svg.selectAll('line')
     .data(links)
     .enter()
@@ -47,8 +56,10 @@ Promise.all([
     .call(d3.drag()
       .on('drag', handleDrag)
       .on('end', handleDragEnd)
-    );
-
+    )
+    .on('click', handleClick);
+}
+refresh()
     // helper function that takes a number, then keeps it within a min/max range
   function rangeFix(number, min, max){
     if(number >= min && number <= max) return number;
@@ -57,7 +68,6 @@ Promise.all([
   }
   // another helper function that simply asks the position JSON for a X value of a node
   // also has a catch (the index being -1) incase it doesnt exist which creates a new position in the JSON
-  // CURRENTLY THE PHP DOESNT TAKE THIS NEW POSITION AND STAYS LOCAL
   function getNodeX(nodeId) {
     var index = nodePosition.findIndex(obj => obj.id==nodeId);
     if(index == -1){
@@ -85,9 +95,37 @@ Promise.all([
     return rangeFix(nodePosition[index].y,0,1);
     
   }
-
+  
+  function handleClick(event, d) {
+    console.log(event)
+    console.log(d)
+    clickPanel.style.left = event.pageX + 'px';
+    clickPanel.style.top = event.pageY + 'px';
+    document.getElementById("name").innerHTML = d.name;
+    document.getElementById("linker").class = d.id;
+    if(link != null) {
+      console.log(`linking ${link} and ${d.id}`)
+      updateLINK(link, d.id)
+      found = false
+      for(let i = links.length-1; i >= 0; i--)
+        // console.log(links[i])
+        if((links[i].source == link && links[i].target == d.id) || (links[i].target == link && links[i].source == d.id)){
+          found = true;
+          links.splice(i, 1)
+        }
+      if(!found)
+        links.push({
+          "source":link,
+          "target":d.id
+        });
+      link = null;
+      refresh()
+    } else
+      clickPanel.classList.remove('hidden');
+  }
   // Drag function, AKA move the node to the mouse position
   function handleDrag(event, d) {
+    clickPanel.classList.add('hidden');
     const { x, y } = event;
     var index = nodePosition.findIndex(obj => obj.id==d.id);
     console.log(nodePosition[index].x);
@@ -122,7 +160,53 @@ Promise.all([
     console.log("trying to update...")
     var index = nodePosition.findIndex(obj => obj.id==nodeID);
     console.log(nodePosition[index])
-    fetch('fix.php', {
+    fetch('position.php', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(nodePosition[index])
+    })
+      .then(response => console.log(response))
+      .then(responseData => {
+        
+        return responseData
+      })
+      .catch(error => {
+        
+        throw error
+      });
+  }
+
+  function updateLINK(originalNode, targetNode){
+    console.log("trying to update...")
+    let data = {
+      source:originalNode,
+      target:targetNode
+    }
+    fetch('links.php', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(data)
+    })
+      .then(response => console.log(response))
+      .then(responseData => {
+        
+        return responseData
+      })
+      .catch(error => {
+        
+        throw error
+      });
+  }
+
+  function updateJSON(nodeID){
+    console.log("trying to update...")
+    var index = nodePosition.findIndex(obj => obj.id==nodeID);
+    console.log(nodePosition[index])
+    fetch('position.php', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
