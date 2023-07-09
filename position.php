@@ -11,8 +11,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     var_dump($dataA);
     foreach ($data as $key => $entry) {
         if ($entry['id'] == $dataA->id) {
-            $data[$key]['x'] = $dataA->x;
-            $data[$key]['y'] = $dataA->y;
+            if($dataA->x == "null" && $dataA->y == "null")
+                array_splice($data, $key, 1);
+            else{
+                $data[$key]['x'] = $dataA->x;
+                $data[$key]['y'] = $dataA->y;
+            }
             $testCase = true;
         }
     }
