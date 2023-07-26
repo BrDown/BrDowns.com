@@ -1,5 +1,0 @@
-[
-    { "source": "node1", "target": "node2" },
-    { "source": "node2", "target": "node3" }
-  ]
-  
