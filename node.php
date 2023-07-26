@@ -20,6 +20,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             } else if($dataA->color != "null"){
                 $data[$key]['color'] = $dataA->color;
                 // echo $dataA->color;
+            } else if($dataA->description != "null"){
+                $data[$key]['description'] = $dataA->description;
+                // echo $dataA->color;
             } else {
                 array_splice($data, $key, 1);
             }
