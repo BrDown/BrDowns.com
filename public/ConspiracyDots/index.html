@@ -3,6 +3,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <head>
   <title>Conspiracy Dots</title>
+  
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&display=swap" rel="stylesheet">
   <link rel="icon" href ="shitty.png" type ="image/x-icon">
   <style>
 body, html {
@@ -107,7 +111,56 @@ body, html {
     text-decoration: none;
     color:whitesmoke;
   }
-
+  .none{
+    display: none !important;
+  }
+  #none{
+    display: none !important;
+  }
+  #thePainBar{
+    position: absolute;
+    display: flex;
+    top:14%;
+    left:3%;
+    right: 3%;
+    bottom: 3%;
+    justify-content: center;
+    align-items: center;
+    
+  }
+  .link{
+    text-decoration: none;
+    color:whitesmoke
+  }
+  #thePainBar > * {
+    flex:1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 3%;
+    height: 100%;
+    border-radius: 50px;
+    text-align: center;
+    font-family: 'Archivo Black', sans-serif;
+    font-size: xxx-large;
+    
+  }
+  #local {
+    background-color: rgb(213, 105, 105);
+  }
+  #global {
+    background-color: rgb(221, 74, 74);
+  }
+  .suffer{
+    border-radius: 50px;
+    position:absolute; 
+    width:50%;
+    height:100%;
+    top:0;
+    left: 0;
+    z-index: 1;
+    /* background-color: khaki; */
+}
   </style>
 </head>
 <!-- Google tag (gtag.js) -->
@@ -127,7 +180,9 @@ body, html {
   <textarea  type="text" id="descript" class="hidden"></textarea >
   <div id="bar">
     
-    <a>Current Action: <b id="CA">Edit Dots</b></a>
+    <a id="wowie1" class="none">Current Action: <b id="CA">Edit Dots</b></a>
+    <div id="wowie2" class="none"><input placeholder="Dot Code" value="foo" id="onGod"/><button onclick="restartFB(document.getElementById('onGod').value)">Connect</button></div>
+    
     <div id="nodeModification" class="hidden">
       <h6 style="margin:0%">Change Node</h6>
       <div>
@@ -136,18 +191,55 @@ body, html {
         <button id="delete Node">DELETE</button>
       </div>
     </div>
-    
     <button onclick="linkNodes(this)" id="linker">unlink/link</button>
   </div>
   <button style="left: 45%; top:2%; position: fixed;" id="newNode" >NEW NODE</button>
-
+  <script type="text/javascript">
+    getScript=(url)=>{
+        var script = document.createElement('script');
+        script.setAttribute('type', 'text/javascript');
+        script.setAttribute('src', url);
+        if(document.body == null){
+            document.head.appendChild(script);
+        }else{
+            document.body.appendChild(script);
+        }
+    }
+    function clearly(ff){
+      // console.log(document.getElementById("thePainBar"))
+      document.getElementById("thePainBar").className = "none"
+      document.getElementById("wowie"+ff).className=""
+    }
+   </script>
+  <div id="thePainBar">
+    <div id="local"><a class="link" href="#" onclick="clearly(1); getScript('local/diagram.js')"><span class="suffer"></span>Local</a></div>
+    <div id="global"><a class="link" href="#" onclick="clearly(2); getScript('global/realtime diagram.js')"><span class="suffer" style="left:50%"></span>Global</a></div>
+</div>
   <!-- <sc zript src="https://cdn.jsdelivr.net/npm/chart.js"></script>  -->
   <!-- unused and leftover(i was going to use chart.js, but d3 is what i ended up using) -->
+  <script src="https://www.gstatic.com/firebasejs/7.16.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/7.16.1/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/7.16.1/firebase-database.js"></script>
+
+  <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyDJ93i6nbJrzuNyNIQFy8aA1V8bxDJIFPU",
+      authDomain: "nodeproject-df641.firebaseapp.com",
+      databaseURL: "https://nodeproject-df641-default-rtdb.firebaseio.com",
+      projectId: "nodeproject-df641",
+      storageBucket: "nodeproject-df641.appspot.com",
+      messagingSenderId: "500183027225",
+      appId: "1:500183027225:web:ea57752061e5d84dd2e488",
+      measurementId: "G-SVKRHMXQ70"
+    };
+    firebase.initializeApp(firebaseConfig);
+    var database = firebase.database();
+  </script>
   <script src="D3.js"></script>
   <!-- the framework -->
   <script src="name.js"></script>
   
-  <script src="diagram.js"></script>
+  <!-- <script src="diagram.js"></script> -->
   <!-- the main script -->
 </body>
 </html>
