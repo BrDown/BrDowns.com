@@ -1,0 +1,67 @@
+<!-- Written (and designed) by Alec -->
+<html>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=yes">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Signika+Negative:wght@600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<link href="https://fonts.googleapis.com/css2?family=Rubik+Mono+One&display=swap" rel="stylesheet">
+<head>
+ 
+  
+</head>
+
+<body>
+    <div id="background" class="background">
+   
+  <div id="background2" class="background2">
+    </div>
+       </div>
+  <h1>Team Scouting</h1>
+    <center>
+<!--       bunch o' buttons -->
+  <button onclick='createTeam();' id="teambutton">Add Team</button>
+  <button onclick='removeTeam()' id="removebutton">Remove current team</button>
+  <button onclick='removeAll()'>Remove ALL teams</button>
+<!--       bunch o' input-->
+  <div class="input" id="inputField">
+    <!-- if you wanted to add more data follow this formula
+    <input type="number" id="teamvalue"></input> -->
+  <input type="number" id="TeamNum" placeholder="Team Number"></input>
+  <input type="string" id="TeamName" placeholder="Team Name"></input>
+  <input type="string" id="TeamDriver" placeholder="How Their Driver is"></input>
+  <input type="string" id="TeamAuto" placeholder="How Their Auto is"></input>
+  <input type="string" id="TeamNotes" placeholder="Extra Notes"></input>
+  </div>
+
+  <div id="teamList" class="teamList">
+    
+  </div>
+</center>
+
+
+
+  
+  <script src="https://www.gstatic.com/firebasejs/7.16.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/7.16.1/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/7.16.1/firebase-database.js"></script>
+
+  <script>
+    var firebaseConfig = {
+  apiKey: "AIzaSyBZ5V82zKDXk1Q3aEg016LUQGWvCHSj180",
+  authDomain: "scoutingapp-f280c.firebaseapp.com",
+  databaseURL: "https://scoutingapp-f280c-default-rtdb.firebaseio.com",
+  projectId: "scoutingapp-f280c",
+  storageBucket: "scoutingapp-f280c.appspot.com",
+  messagingSenderId: "931436123587",
+  appId: "1:931436123587:web:19f09dc024cd06b1fb9976"
+};
+    firebase.initializeApp(firebaseConfig);
+  </script>
+
+  <script src="main.js" defer></script>
+  
+</body>
+
+
+  </html>

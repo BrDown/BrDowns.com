@@ -1,0 +1,56 @@
+<html>
+
+<head>
+    <style>
+        html {
+            background-color: #CCCCFF;
+            color: #333300;
+        }
+
+        .buh {
+            display: flex;
+            height: 100%;
+            width: 100%;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-around;
+        }
+
+        .buh>* {
+            flex: 1;
+        }
+        .ffs{
+            display: flex; flex-direction: column;
+        }
+        .ffs>code{
+            border: solid 1px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="buh">
+        <div style="flex:.1; text-align: center;">This is a testing page. I'm impressed you found it.<br>I doubt you need anything here, but do as you will.</div>
+        <div  class="ffs"><code style="background-color: lightgray;"
+                onclick="this.innerHTML=JSON.stringify(localStorage);">Click me to get localStorage</code>
+            <input id="lcset" placeholder="Put localStorage as a JSON here"><button onclick="
+            
+            // I could really give less of a shit of splitting this into multiple files
+            
+            try{
+                let obj = JSON.parse(document.getElementById('lcset').value);
+                for (const [key, value] of Object.entries(obj)) {
+                    localStorage.setItem(key, value);
+                }
+                document.getElementById('lcset').value = 'Success!'
+
+            }
+            catch{
+                document.getElementById('lcset').value = 'an Error has occured.'
+            }
+            ">Set localStorage</button>
+        </div>
+    </div>
+</body>
+
+</html>

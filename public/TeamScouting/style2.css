@@ -1,0 +1,28 @@
+.background {
+  left: 0;
+  top: 0;
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  overflow: hidden;
+  z-index: -2;
+  scale: 1;
+}
+
+input{
+  
+}
+
+button{
+  
+}
+
+div.team {
+  border: 1px solid black;
+  display: inline-block;
+}
+
+div.teamSelected {
+  border: 1px solid grey;
+  display: inline-block;
+}
