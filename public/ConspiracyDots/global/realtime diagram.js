@@ -25,6 +25,7 @@ function restartFB(code) {
   // if (typeof test !== 'undefined')
   //   test.off()
   this.code = code
+  document.getElementById('onGod').value = code;
   if(typeof data !== 'undefined')
   data = []
   if(typeof dataArray !== 'undefined')
@@ -38,14 +39,23 @@ function restartFB(code) {
   })
   // refresh()
 }
-restartFB("foo")
+var code2 = getParameterByName('code');
+if(code2) restartFB(code2);
+else restartFB("foo")
 
 let nodes = (localStorage.getItem('nodes')?JSON.parse(localStorage.getItem('nodes')):[])
 let links = (localStorage.getItem('links')?JSON.parse(localStorage.getItem('links')):[])
 let nodePosition = (localStorage.getItem('nodePosition')?JSON.parse(localStorage.getItem('nodePosition')):[])
 
 // console.log(nodePosition)
-
+function getParameterByName(name, url = window.location.href) {
+  name = name.replace(/[\[\]]/g, '\\$&');
+  var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
+      results = regex.exec(url);
+  if (!results) return null;
+  if (!results[2]) return '';
+  return decodeURIComponent(results[2].replace(/\+/g, ' '));
+}
 function RESETLOCALSTOARTE(){
   
 }
