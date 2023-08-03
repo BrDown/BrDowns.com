@@ -33,14 +33,17 @@ function restartFB(code) {
   test = firebase.database().ref(code).on('value',(ss) => {
     data = ss.val()
     if(data)
-    dataArray = Object.entries(data);
+      dataArray = Object.entries(data);
+    else
+      dataArray = []
     originalPos = JSON.parse(JSON.stringify(data));
     refresh()
   })
   // refresh()
 }
-var code2 = getParameterByName('code');
-if(code2) restartFB(code2);
+// var code2 = getParameterByName('code');
+console.log(parent.location.hash != "")
+if(parent.location.hash != "") restartFB(parent.location.hash.slice(1));
 else restartFB("foo")
 
 let nodes = (localStorage.getItem('nodes')?JSON.parse(localStorage.getItem('nodes')):[])
@@ -48,14 +51,7 @@ let links = (localStorage.getItem('links')?JSON.parse(localStorage.getItem('link
 let nodePosition = (localStorage.getItem('nodePosition')?JSON.parse(localStorage.getItem('nodePosition')):[])
 
 // console.log(nodePosition)
-function getParameterByName(name, url = window.location.href) {
-  name = name.replace(/[\[\]]/g, '\\$&');
-  var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
-      results = regex.exec(url);
-  if (!results) return null;
-  if (!results[2]) return '';
-  return decodeURIComponent(results[2].replace(/\+/g, ' '));
-}
+
 function RESETLOCALSTOARTE(){
   
 }
