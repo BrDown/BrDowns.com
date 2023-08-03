@@ -25,6 +25,7 @@ function restartFB(code) {
   // if (typeof test !== 'undefined')
   //   test.off()
   this.code = code
+  document.getElementById('onGod').value = code;
   if(typeof data !== 'undefined')
   data = []
   if(typeof dataArray !== 'undefined')
@@ -32,13 +33,18 @@ function restartFB(code) {
   test = firebase.database().ref(code).on('value',(ss) => {
     data = ss.val()
     if(data)
-    dataArray = Object.entries(data);
+      dataArray = Object.entries(data);
+    else
+      dataArray = []
     originalPos = JSON.parse(JSON.stringify(data));
     refresh()
   })
   // refresh()
 }
-restartFB("foo")
+// var code2 = getParameterByName('code');
+console.log(parent.location.hash != "")
+if(parent.location.hash != "") restartFB(parent.location.hash.slice(1));
+else restartFB("foo")
 
 let nodes = (localStorage.getItem('nodes')?JSON.parse(localStorage.getItem('nodes')):[])
 let links = (localStorage.getItem('links')?JSON.parse(localStorage.getItem('links')):[])

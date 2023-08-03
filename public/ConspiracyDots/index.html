@@ -181,7 +181,7 @@ body, html {
   <div id="bar">
     
     <a id="wowie1" class="none">Current Action: <b id="CA">Edit Dots</b></a>
-    <div id="wowie2" class="none"><input placeholder="Dot Code" value="foo" id="onGod"/><button onclick="restartFB(document.getElementById('onGod').value)">Connect</button></div>
+    <div id="wowie2" class="none"><input placeholder="Dot Code" value="" id="onGod"/><button onclick="restartFB(document.getElementById('onGod').value)">Connect</button></div>
     
     <div id="nodeModification" class="hidden">
       <h6 style="margin:0%">Change Node</h6>
@@ -194,23 +194,6 @@ body, html {
     <button onclick="linkNodes(this)" id="linker">unlink/link</button>
   </div>
   <button style="left: 45%; top:2%; position: fixed;" id="newNode" >NEW NODE</button>
-  <script type="text/javascript">
-    getScript=(url)=>{
-        var script = document.createElement('script');
-        script.setAttribute('type', 'text/javascript');
-        script.setAttribute('src', url);
-        if(document.body == null){
-            document.head.appendChild(script);
-        }else{
-            document.body.appendChild(script);
-        }
-    }
-    function clearly(ff){
-      // console.log(document.getElementById("thePainBar"))
-      document.getElementById("thePainBar").className = "none"
-      document.getElementById("wowie"+ff).className=""
-    }
-   </script>
   <div id="thePainBar">
     <div id="local"><a class="link" href="#" onclick="clearly(1); getScript('local/diagram.js')"><span class="suffer"></span>Local</a></div>
     <div id="global"><a class="link" href="#" onclick="clearly(2); getScript('global/realtime diagram.js')"><span class="suffer" style="left:50%"></span>Global</a></div>
@@ -238,7 +221,26 @@ body, html {
   <script src="D3.js"></script>
   <!-- the framework -->
   <script src="name.js"></script>
-  
+  <script type="text/javascript">
+    getScript=(url)=>{
+        var script = document.createElement('script');
+        script.setAttribute('type', 'text/javascript');
+        script.setAttribute('src', url);
+        if(document.body == null){
+            document.head.appendChild(script);
+        }else{
+            document.body.appendChild(script);
+        }
+    }
+    function clearly(ff){
+      // console.log(document.getElementById("thePainBar"))
+      document.getElementById("thePainBar").className = "none"
+      document.getElementById("wowie"+ff).className=""
+    }
+    if(parent.location.hash != ""){
+      clearly(2); getScript('global/realtime diagram.js')
+    }
+   </script>
   <!-- <script src="diagram.js"></script> -->
   <!-- the main script -->
 </body>
