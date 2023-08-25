@@ -1,5 +1,14 @@
 // main code
 
+
+
+
+// TODO:remove the default diagram for.... obvious reasons. 
+
+
+
+
+
 // waits for all of the jsons before doing anything
 var startOffsetX = 0;
 var startOffsetY = 0;
@@ -24,7 +33,14 @@ var code;
 function restartFB(code) {
   // if (typeof test !== 'undefined')
   //   test.off()
+  code = code.replace(/^a-zA-Z0-9 ]/g, '')
+  code = code.replace(/\s/g, '')
+  if(code==""){
+  document.getElementById('onGod').value = "ERROR: Blank";
+    throw new Error("nice try fucknuts.")
+}
   this.code = code
+  parent.location.hash = code
   document.getElementById('onGod').value = code;
   if(typeof data !== 'undefined')
   data = []
@@ -42,7 +58,7 @@ function restartFB(code) {
   // refresh()
 }
 // var code2 = getParameterByName('code');
-console.log(parent.location.hash != "")
+// console.log(parent.location.hash != "")
 if(parent.location.hash != "") restartFB(parent.location.hash.slice(1));
 else restartFB("foo")
 
