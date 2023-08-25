@@ -1,3 +1,6 @@
 [submodule "ConspiracyDots"]
 	path = ConspiracyDots
 	url = https://github.com/BrDown/ConspiracyDots.git
+[submodule "TeamScouting"]
+	path = TeamScouting
+	url = https://github.com/BrDown/TeamScouting.git
